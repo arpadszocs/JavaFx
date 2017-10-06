@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TreeTableColumn?>
+<?import javafx.scene.control.TreeTableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.CheckBox?>
+<AnchorPane xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="basics.components.controller.Controller">
+    <BorderPane AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0"
+                AnchorPane.topAnchor="0">
+        <top>
+            <BorderPane>
+                <left>
+                    <HBox alignment="CENTER_LEFT">
+                        <VBox spacing="10">
+                            <padding>
+                                <Insets bottom="10" left="10" right="10" top="10"/>
+                            </padding>
+                            <HBox spacing="10">
+                                <Label text="First name"/>
+                                <TextField fx:id="textFieldFirstName"/>
+                                <Button fx:id="buttonAdd" text="Add"/>
+                            </HBox>
+                            <HBox spacing="10">
+                                <Label text="Last name"/>
+                                <TextField fx:id="textFieldLastName"/>
+                                <Button fx:id="buttonRemove" text="Remove"/>
+                            </HBox>
+                        </VBox>
+                    </HBox>
+                </left>
+                <right>
+                    <HBox>
+                        <VBox spacing="10">
+                            <padding>
+                                <Insets bottom="10" left="10" right="10" top="10"/>
+                            </padding>
+                            <Button fx:id="buttonAddBrand" text="Add Brand"/>
+                            <Button fx:id="buttonAddModel" text="Add Model"/>
+                        </VBox>
+                        <HBox alignment="CENTER_RIGHT" spacing="10">
+                            <padding>
+                                <Insets bottom="10" left="10" right="10" top="10"/>
+                            </padding>
+                            <ComboBox fx:id="comboBoxLand" prefWidth="200"/>
+                        </HBox>
+                    </HBox>
+                </right>
+                <center>
+                    <VBox spacing="10" alignment="CENTER">
+                        <padding>
+                            <Insets bottom="10" left="10" right="10" top="10"/>
+                        </padding>
+                        <Label text="Disabled"/>
+                        <CheckBox fx:id="checkBoxDisable"/>
+                    </VBox>
+                </center>
+            </BorderPane>
+        </top>
+        <center>
+            <SplitPane dividerPositions="0.5">
+                <TableView fx:id="tableView">
+                    <columns>
+                        <TableColumn fx:id="colId" text="Id"/>
+                        <TableColumn fx:id="colFirstName" text="First Name"/>
+                        <TableColumn fx:id="colLastName" text="Last Name"/>
+                        <TableColumn fx:id="colCustom" text="CustomCell"/>
+                    </columns>
+                </TableView>
+                <TreeTableView fx:id="treeTableView">
+                    <columns>
+                        <TreeTableColumn fx:id="colBrand" text="Brand"/>
+                        <TreeTableColumn fx:id="colName" text="Name"/>
+                        <TreeTableColumn fx:id="colDescription" text="Description"/>
+                        <TreeTableColumn fx:id="colPrice" text="Price"/>
+                        <TreeTableColumn fx:id="colAvailable" text="Available"/>
+                    </columns>
+                    <columnResizePolicy>
+                        <TreeTableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+                    </columnResizePolicy>
+                </TreeTableView>
+            </SplitPane>
+        </center>
+    </BorderPane>
+</AnchorPane>
