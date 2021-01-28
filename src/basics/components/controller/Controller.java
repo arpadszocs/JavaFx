@@ -1,6 +1,6 @@
 package basics.components.controller;
 
-import basics.components.custom.CustomTableCell;
+import basics.components.custom.SimpleCustomTableCell;
 import basics.components.model.CarBrand;
 import basics.components.model.CarModel;
 import basics.components.model.Land;
@@ -26,6 +26,7 @@ import javafx.scene.control.cell.CheckBoxTreeTableCell;
 import javafx.scene.control.cell.ComboBoxTreeTableCell;
 import javafx.scene.control.cell.TextFieldTreeTableCell;
 import javafx.util.StringConverter;
+import javafx.util.converter.DefaultStringConverter;
 
 import java.net.URL;
 import java.util.Arrays;
@@ -85,7 +86,8 @@ public class Controller implements Initializable {
 	@FXML
 	private CheckBox checkBoxDisable;
 
-	private ObservableList<User> userData = FXCollections.observableArrayList();
+	// The data of the table is stored in an Observable list
+	private final ObservableList<User> userData = FXCollections.observableArrayList();
 
 	private final ObservableList<CarBrand> brands = FXCollections
 			.observableArrayList(Arrays.asList(CarBrand.values()));
@@ -105,19 +107,19 @@ public class Controller implements Initializable {
 		initializeButtons();
 		initializeLands();
 
-		// TODO : Listeners
-		//addSelectionListener();
-		//addListener();
+		// Listeners (remove comment one by one to see the effects separately)
+//		addSelectionListener();
+//		addListener();
 
-		//TODO : Bindings
-		//bindToCheckBox();
-		//bindTextFields();
-		//bindTextFieldsBidirectional();
-		//bindModified();
-		//chainBindings();
-		//whenAndThen();
-		//bindAddDisable();
-		//bindModifiedAddDisable();
+		// Bindings (remove comment one by one to see the effects separately)
+//		bindToCheckBox();
+//		bindTextFields();
+//		bindTextFieldsBidirectional();
+//		bindModified();
+//		chainBindings();
+//		whenAndThen();
+//		bindAddDisable();
+//		bindModifiedAddDisable();
 	}
 
 	private void initializeTable() {
@@ -136,7 +138,8 @@ public class Controller implements Initializable {
 		colCustom.setCellValueFactory(data -> data.getValue().customProperrty());
 
 		// CelLFactory handles the things about the Cell itself for example the displayed Node(TextField,ComboBox,...)
-		colCustom.setCellFactory(factory -> new CustomTableCell());
+		colCustom.setCellFactory(factory -> new SimpleCustomTableCell());
+//		colCustom.setCellFactory(factory -> new CustomTableCell());
 	}
 
 	private void initializeTreeTable() {
@@ -151,33 +154,30 @@ public class Controller implements Initializable {
 		// By default is not defined any StringConverter that needed to display text in a cell,
 		// so you have to define one.
 		colName.setCellFactory(factory -> new TextFieldTreeTableCell<>(new StringConverter<String>() {
-			@Override public String toString(String object) {
+			@Override
+			public String toString(String object) {
 				return object;
 			}
 
-			@Override public String fromString(String string) {
+			@Override
+			public String fromString(String string) {
 				return string;
 			}
 		}));
 
 		colDescription.setCellValueFactory(data -> data.getValue().getValue().descriptionProperty());
-		colDescription.setCellFactory(factory -> new TextFieldTreeTableCell<>(new StringConverter<String>() {
-			@Override public String toString(String object) {
-				return object;
-			}
-
-			@Override public String fromString(String string) {
-				return string;
-			}
-		}));
+		// Use default string converter
+		colDescription.setCellFactory(factory -> new TextFieldTreeTableCell<>(new DefaultStringConverter()));
 
 		colPrice.setCellValueFactory(data -> data.getValue().getValue().priceProperty().asObject());
 		colPrice.setCellFactory(factory -> new TextFieldTreeTableCell<>(new StringConverter<Double>() {
-			@Override public String toString(Double object) {
+			@Override
+			public String toString(Double object) {
 				return object.toString();
 			}
 
-			@Override public Double fromString(String string) {
+			@Override
+			public Double fromString(String string) {
 				return Double.valueOf(string);
 			}
 		}));
@@ -290,6 +290,10 @@ public class Controller implements Initializable {
 		//Simple binding that binds two properties, which means that on properties change
 		// results the change of the other's
 		buttonAdd.disableProperty().bind(checkBoxDisable.selectedProperty());
+
+		checkBoxDisable.selectedProperty().addListener((observable, oldValue, newValue) -> {
+			buttonAdd.setDisable(newValue);
+		});
 	}
 
 	/**
@@ -309,9 +313,12 @@ public class Controller implements Initializable {
 		textFieldLastName.textProperty().bindBidirectional(textFieldFirstName.textProperty());
 	}
 
+
+	// Custom bindings ...
+
 	private void bindModified() {
 		textFieldFirstName.textProperty().bind(Bindings.createStringBinding(() ->
-				textFieldLastName.getText().toUpperCase(), // observed value
+						textFieldLastName.getText().toUpperCase(), // observed value
 				textFieldLastName.textProperty() // observed property
 		));
 	}

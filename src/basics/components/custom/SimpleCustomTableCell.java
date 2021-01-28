@@ -14,7 +14,6 @@ import javafx.scene.control.TableCell;
  */
 public class SimpleCustomTableCell extends TableCell<User, String> {
 
-
 	/**
 	 * This method is called every time a changed is made in the UI, so the cell have to be rendered again.
 	 */
@@ -26,18 +25,19 @@ public class SimpleCustomTableCell extends TableCell<User, String> {
 		User user = (User) getTableRow().getItem();
 		// In the most of the cases you have to do the following check because you cannot ensure that the cell won't be
 		// empty or the containing element is not null.
-		if(empty || user == null){
+		if (empty || user == null) {
 			setText(null);
 			setGraphic(null);
+			setStyle(null);
 			return;
 		}
 
 		// Some random action that you can do with the cell.
-		if(user.getId() % 3 == 0){
+		if (user.getId() % 3 == 0) {
 			setStyle("-fx-background-color: red");
-		}else if(user.getId() % 3 == 1){
-			setStyle("-fx-background-color: yellow");
-		}else{
+		} else if (user.getId() % 3 == 1) {
+			setStyle("-fx-background-color: green");
+		} else {
 			setStyle("-fx-background-color: blue");
 		}
 	}
